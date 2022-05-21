@@ -14,6 +14,9 @@
 		262A50AB2838F94F00E1477D /* ObservedEnumsWithAssociatedValuesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262A50AA2838F94F00E1477D /* ObservedEnumsWithAssociatedValuesTests.swift */; };
 		262A50B52838F94F00E1477D /* ObservedEnumsWithAssociatedValuesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262A50B42838F94F00E1477D /* ObservedEnumsWithAssociatedValuesUITests.swift */; };
 		262A50B72838F94F00E1477D /* ObservedEnumsWithAssociatedValuesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262A50B62838F94F00E1477D /* ObservedEnumsWithAssociatedValuesUITestsLaunchTests.swift */; };
+		262A50C52838FA8F00E1477D /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262A50C42838FA8F00E1477D /* Animal.swift */; };
+		262A50C72838FD4900E1477D /* AnimalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262A50C62838FD4900E1477D /* AnimalsView.swift */; };
+		262A50CB2838FE9F00E1477D /* AnimalsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262A50CA2838FE9F00E1477D /* AnimalsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		262A50B02838F94F00E1477D /* ObservedEnumsWithAssociatedValuesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ObservedEnumsWithAssociatedValuesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		262A50B42838F94F00E1477D /* ObservedEnumsWithAssociatedValuesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservedEnumsWithAssociatedValuesUITests.swift; sourceTree = "<group>"; };
 		262A50B62838F94F00E1477D /* ObservedEnumsWithAssociatedValuesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservedEnumsWithAssociatedValuesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		262A50C42838FA8F00E1477D /* Animal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
+		262A50C62838FD4900E1477D /* AnimalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalsView.swift; sourceTree = "<group>"; };
+		262A50CA2838FE9F00E1477D /* AnimalsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +100,7 @@
 		262A50982838F94E00E1477D /* ObservedEnumsWithAssociatedValues */ = {
 			isa = PBXGroup;
 			children = (
+				262A50C32838FA7B00E1477D /* Animals */,
 				262A50992838F94E00E1477D /* ObservedEnumsWithAssociatedValuesApp.swift */,
 				262A509B2838F94E00E1477D /* ContentView.swift */,
 				262A509D2838F94F00E1477D /* Assets.xcassets */,
@@ -125,6 +132,32 @@
 				262A50B62838F94F00E1477D /* ObservedEnumsWithAssociatedValuesUITestsLaunchTests.swift */,
 			);
 			path = ObservedEnumsWithAssociatedValuesUITests;
+			sourceTree = "<group>";
+		};
+		262A50C32838FA7B00E1477D /* Animals */ = {
+			isa = PBXGroup;
+			children = (
+				262A50C92838FD7F00E1477D /* Cat */,
+				262A50C82838FD7800E1477D /* Dog */,
+				262A50C42838FA8F00E1477D /* Animal.swift */,
+				262A50C62838FD4900E1477D /* AnimalsView.swift */,
+				262A50CA2838FE9F00E1477D /* AnimalsViewModel.swift */,
+			);
+			path = Animals;
+			sourceTree = "<group>";
+		};
+		262A50C82838FD7800E1477D /* Dog */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Dog;
+			sourceTree = "<group>";
+		};
+		262A50C92838FD7F00E1477D /* Cat */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +290,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				262A50C72838FD4900E1477D /* AnimalsView.swift in Sources */,
 				262A509C2838F94E00E1477D /* ContentView.swift in Sources */,
+				262A50C52838FA8F00E1477D /* Animal.swift in Sources */,
 				262A509A2838F94E00E1477D /* ObservedEnumsWithAssociatedValuesApp.swift in Sources */,
+				262A50CB2838FE9F00E1477D /* AnimalsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
