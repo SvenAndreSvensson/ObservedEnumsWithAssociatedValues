@@ -2,7 +2,7 @@
 import SwiftUI
 
 struct AnimalsView: View {
-    @ObservedObject var viewModel: AnimalsViewModel
+    @StateObject var viewModel: AnimalsViewModel
 
     var body: some View {
         VStack(spacing: 24) {
@@ -12,30 +12,22 @@ struct AnimalsView: View {
                         Button {
                             viewModel.setActive(id: animal.id)
                         } label: {
-                            createView(animal: animal)
+                            switch animal {
+                            case let .dog(dog):
+                                DogView(viewData: dog)
+
+                            case let .cat(cat):
+                                CatView(viewData: cat)
+                            }
                         }
                     }
                 }
                 .padding(.horizontal, 16)
-            } // ScrollView
-
-            if (viewModel.active != nil) {
-                // THIS IS THE CLUE, remove the id and the textfield and it does not update the second time you select an animal
-                createEditView(animal: viewModel.active!).id(viewModel.active!.id)
             }
 
-            Text("Changing ObservedObject viewModels published active: Animal was not reflected in the view - not before the editor View id was set to the animal.id")
-                .padding(.horizontal, 16)
-        }
-    }
-
-    @ViewBuilder
-    func createEditView(animal: Animal) -> some View {
-        switch animal {
-        case let .dog(dog):
-            DogEditView(viewData: dog)
-        case let .cat(cat):
-            CatEditView(viewData: cat, actions: viewModel)
+            if let animal = viewModel.editing {
+                EditView(animal: animal, actions: viewModel)
+            }
         }
     }
 
@@ -50,29 +42,30 @@ struct AnimalsView: View {
     }
 }
 
-protocol CatEditViewActions {
-    func updateCat(viewData: Cat, name: String)
+protocol EditViewActions {
+    func update(animal: Animal)
 }
 
-struct CatEditView: View {
-    var viewData: Cat
-    var actions: CatEditViewActions?
+struct EditView: View {
+    var animal: Animal
+    var actions: EditViewActions?
 
-    @State private var name: String
+    @State private var name: String = ""
 
-    init(viewData: Cat, actions: CatEditViewActions? ){
-        self.viewData = viewData
+    init(animal: Animal, actions: EditViewActions? ){
+        self.animal = animal
         self.actions = actions
-        _name = State(initialValue: viewData.name)
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            Text(viewData.name)
             TextField("", text: $name, prompt: Text("Write name"))
                 .textFieldStyle(RoundedBorderTextFieldStyle())
+
             Button {
-                actions?.updateCat(viewData: viewData, name: name)
+                var copy = animal
+                copy.rename(with: name)
+                actions?.update(animal: copy)
             } label: {
                 Text("Update")
             }
@@ -81,19 +74,15 @@ struct CatEditView: View {
         .background(Color.blue.opacity(0.5))
         .cornerRadius(8)
         .padding(.horizontal, 16)
-    }
-}
+        .onAppear(perform: {
+            switch animal {
+            case .dog(let dog):
+                name = dog.name
 
-struct DogEditView: View {
-    var viewData: Dog
-
-    var body: some View {
-        VStack(spacing: 0) {
-            Text(viewData.name)
-        }
-        .padding()
-        .background(Color.red.opacity(0.5))
-        .cornerRadius(8)
+            case .cat(let cat):
+                name = cat.name
+            }
+        })
     }
 }
 
@@ -126,11 +115,9 @@ struct DogView: View {
 struct AnimalsView_Previews: PreviewProvider {
     static var previews: some View {
         AnimalsView(viewModel: .init(animals: [
-            .cat(.init(id: "4", name: "Tom", number: 3, state: .one)),
-            .dog(.init(id: "1", name: "Millie", number: 1, state: .one)),
-            .dog(.init(id: "2", name: "Ida", number: 2, state: .one)),
-            .cat(.init(id: "3", name: "Tussi", number: 3, state: .three))
-
+            .cat(.init(id: "1", name: "Lilo", foobar: 0)),
+            .dog(.init(id: "2", name: "Marko", foobar: 1)),
+            .cat(.init(id: "3", name: "Pepsi", foobar: 2))
         ]))
     }
 }

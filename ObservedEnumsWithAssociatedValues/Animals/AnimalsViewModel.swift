@@ -3,25 +3,28 @@ import SwiftUI
 
 class AnimalsViewModel: ObservableObject {
     @Published var animals: [Animal]
-    @Published var active: Animal?
+    @Published var editing: Animal?
 
     init(animals:[Animal] = []) {
         self.animals = animals
     }
 
     func setActive(id: String) {
-        active = animals.first(where: { $0.id == id })
+        guard let animal = animals.first(where: { $0.id == id }) else {
+            fatalError("wtf...")
+        }
+
+        editing = animal
     }
 }
 
-extension AnimalsViewModel: CatEditViewActions {
-    func updateCat(viewData: Cat, name: String) {
-
-        guard let catModuleIndex = animals.firstIndex(where: { $0.id == viewData.id }) else {
-            assertionFailure("❌ expected cat to exist")
-            return
+extension AnimalsViewModel: EditViewActions {
+    func update(animal: Animal) {
+        guard let index = animals.firstIndex(where: { $0.id == animal.id }) else {
+            fatalError("wtf..")
         }
 
-        animals[catModuleIndex].rename(with: name)
+        animals[index] = animal
+        editing = nil
     }
 }

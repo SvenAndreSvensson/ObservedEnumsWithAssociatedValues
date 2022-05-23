@@ -4,18 +4,6 @@ import SwiftUI
 enum Animal {
     case dog(Dog)
     case cat(Cat)
-
-    enum State {
-        case one
-        case two
-        case three
-    }
-}
-
-extension Animal: Equatable {
-    static func == (lhs: Animal, rhs: Animal) -> Bool {
-        lhs.id == rhs.id
-    }
 }
 
 extension Animal: Identifiable {
@@ -29,29 +17,34 @@ extension Animal: Identifiable {
     }
 }
 
+extension Animal: Equatable {
+    static func == (lhs: Animal, rhs: Animal) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
 extension Animal {
     mutating func rename(with name: String) {
         switch self {
-        case let .cat(cat):
-            let _cat = Cat(id: cat.id, name: name, number: cat.number, state: cat.state)
-            self = .cat(_cat)
-        case let .dog(dog):
-            let _dog = Dog(id: dog.id, name: name, number: dog.number, state: dog.state)
-            self = .dog(_dog)
+        case var .cat(cat):
+            cat.name = name
+            self = .cat(cat)
+
+        case var .dog(dog):
+            dog.name = name
+            self = .dog(dog)
         }
     }
 }
 
 struct Dog: Identifiable {
     let id: String
-    let name: String
-    let number: Int
-    let state: Animal.State
+    var name: String
+    var foobar: Int
 }
 
 struct Cat: Identifiable {
     let id: String
-    let name: String
-    let number: Int
-    let state: Animal.State
+    var name: String
+    var foobar: Int
 }
