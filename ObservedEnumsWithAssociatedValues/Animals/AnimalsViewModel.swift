@@ -16,12 +16,14 @@ class AnimalsViewModel: ObservableObject {
 
 extension AnimalsViewModel: CatEditViewActions {
     func updateCat(viewData: Cat, name: String) {
-
-        guard let catModuleIndex = animals.firstIndex(where: { $0.id == viewData.id }) else {
-            assertionFailure("❌ expected cat to exist")
-            return
+        guard
+            let catModuleIndex = animals.firstIndex(where: { $0.id == viewData.id }),
+            case var .cat(cat) = animals[catModuleIndex] else {
+                assertionFailure("❌ expected cat to exist")
+                return
         }
 
-        animals[catModuleIndex].rename(with: name)
+        cat.name = name
+        animals[catModuleIndex] = .cat(cat)
     }
 }

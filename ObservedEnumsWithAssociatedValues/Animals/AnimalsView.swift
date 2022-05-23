@@ -21,7 +21,7 @@ struct AnimalsView: View {
 
             if (viewModel.active != nil) {
                 // THIS IS THE CLUE, remove the id and the textfield and it does not update the second time you select an animal
-                createEditView(animal: viewModel.active!).id(viewModel.active!.id)
+                createEditView(animal: viewModel.active!)// .id(viewModel.active!.id)
             }
 
             Text("Changing ObservedObject viewModels published active: Animal was not reflected in the view - not before the editor View id was set to the animal.id")
@@ -57,14 +57,15 @@ protocol CatEditViewActions {
 struct CatEditView: View {
     var viewData: Cat
     var actions: CatEditViewActions?
+    @State var name: String = ""
 
-    @State private var name: String
-
-    init(viewData: Cat, actions: CatEditViewActions? ){
+    init(viewData: Cat, actions: CatEditViewActions? = nil){
         self.viewData = viewData
         self.actions = actions
         _name = State(initialValue: viewData.name)
     }
+
+
 
     var body: some View {
         VStack(spacing: 0) {
@@ -81,6 +82,14 @@ struct CatEditView: View {
         .background(Color.blue.opacity(0.5))
         .cornerRadius(8)
         .padding(.horizontal, 16)
+        .onChange(of: viewData) { newValue in
+            print("onChange")
+            name =  newValue.name
+        }
+//        .onAppear {
+//            print("onAppear")
+//            name = viewData.name
+//        }
     }
 }
 
