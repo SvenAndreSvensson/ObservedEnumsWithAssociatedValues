@@ -13,7 +13,6 @@ class AnimalsViewModel: ObservableObject {
         guard let animal = animals.first(where: { $0.id == id }) else {
             fatalError("wtf...")
         }
-
         editing = animal
     }
 }

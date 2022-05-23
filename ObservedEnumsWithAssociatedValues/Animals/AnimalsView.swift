@@ -10,6 +10,7 @@ struct AnimalsView: View {
                 HStack( spacing: 16) {
                     ForEach(viewModel.animals) { animal in
                         Button {
+                            viewModel.editing = nil
                             viewModel.setActive(id: animal.id)
                         } label: {
                             switch animal {
@@ -26,7 +27,7 @@ struct AnimalsView: View {
             }
 
             if let animal = viewModel.editing {
-                EditView(animal: animal, actions: viewModel)
+                EditView(animal: animal, actions: viewModel).id(animal.id)
             }
         }
     }
@@ -83,6 +84,7 @@ struct EditView: View {
                 name = cat.name
             }
         })
+
     }
 }
 
